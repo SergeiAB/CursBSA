@@ -1,7 +1,11 @@
+using BookStoreWeb.Models.Interfases;
+using BookStoreWeb.Models.Service;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IAllBooks,ServiceAllBook>();
+builder.Services.AddTransient<ICategory,ServiceCategory>();
 
 var app = builder.Build();
 
