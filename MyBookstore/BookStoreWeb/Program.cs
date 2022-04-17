@@ -1,11 +1,15 @@
-using BookStoreWeb.Models.Interfases;
-using BookStoreWeb.Models.Service;
+
+
+using BookStoreWeb.Models.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<IAllBooks,ServiceAllBook>();
-builder.Services.AddTransient<ICategory,ServiceCategory>();
+builder.Services.AddDbContext<ContextBook>(options=>options.UseSqlServer(@"Server=(localdb)\\mssqllocaldb;Database=BookBasketDb;Trusted_Connection=True;"));
+//builder.Services.AddTransient<IAllBooks,ServiceAllBook>();
+//builder.Services.AddTransient<ICategory,ServiceCategory>();
 
 var app = builder.Build();
 
