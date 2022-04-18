@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookStoreWeb.Models.Data
 {
@@ -11,7 +12,7 @@ namespace BookStoreWeb.Models.Data
 
         public ContextBook(DbContextOptions<ContextBook> options):base(options)
         {
-           
+           //Database.EnsureCreated();
         }
 
         
@@ -51,6 +52,7 @@ namespace BookStoreWeb.Models.Data
     {
         public int StockId { get; set; }
         public int CountBook { get; set; }
+        [Column(TypeName = "money")]
         public decimal Price { get; set; }
         public ICollection<Book> Books { get; set; }
     }
