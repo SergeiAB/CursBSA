@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BookStoreWeb.Models.Data
+namespace BookStoreWeb.Models.DataContext
 {
     public class ContextBook:DbContext
     {
@@ -20,14 +21,15 @@ namespace BookStoreWeb.Models.Data
 
     public class Book
     {
+        
         public int BookId { get; set; }//id книги
         public string Img { get; set; }//путь к изображению книги
         public string Title { get; set; }//название книги
-        public string Autor { get; set; }//автор книги
         public string Annotation { get; set; }//описание книги
         public bool IsFavorite { get; set; } //лидер продаж
         public ICollection<Genre> Genres { get; set; }
-        public ICollection<Author> Autors { get; set; }
+        public ICollection<Author> Authors { get; set; }
+        public ICollection<Stock> Stocks { get; set; }
     }
 
     public class Genre
@@ -45,7 +47,8 @@ namespace BookStoreWeb.Models.Data
         public string Secondname { get; set; }
         public string Biography { get; set; }
         public bool IsReader { get; set; }
-        public ICollection <Book> Books { get; set; }
+        public ICollection<Book> Books { get; set; }
+        
     }
 
     public class Stock
@@ -54,7 +57,7 @@ namespace BookStoreWeb.Models.Data
         public int CountBook { get; set; }
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
-        public ICollection<Book> Books { get; set; }
+       
     }
 
 }
