@@ -1,0 +1,67 @@
+﻿@model IEnumerable<BookStoreWeb.DataContext.Book>
+
+<h4>Каталог книг</h4>
+
+<p>
+  @Html.ActionLink("Добавить книгу", "Create")
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h6>Обложка</h6>              
+            </th>
+            <th>
+                <h6>Название</h6>
+            </th>
+            <th>
+                <h6>Анотация</h6>
+            </th>
+            <th>
+                <h6>Автор</h6>
+            </th>
+            <th>
+                <h6>Жанр</h6>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Img)
+            </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Annotation)
+          <td>
+
+              <td>
+                            @{
+                                if (item.Authors != null)
+                                {
+                                        foreach(var mm in item.Authors)
+                                    {
+                                      @Html.DisplayFor(x => mm.Surname) 
+                                       @Html.DisplayFor(x => mm.Firstname) 
+                                        @Html.DisplayFor(x => mm.Secondname)
+                                    }
+                                }
+                                
+                            }
+                
+          <td>
+
+                @Html.ActionLink("Редактировать", "Edit","Book",new{item.BookId,item.Title}) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Удалить","Delete","Book",new{item.BookId})
+           
+        </tr>
+}
+    </tbody>
+</table>
+

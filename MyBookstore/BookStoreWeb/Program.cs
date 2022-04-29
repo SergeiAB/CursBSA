@@ -1,6 +1,6 @@
 
 
-using BookStoreWeb.Models.DataContext;
+using BookStoreWeb.DataContext;
 using BookStoreWeb.Service;
 using Microsoft.EntityFrameworkCore;
 

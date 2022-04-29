@@ -1,5 +1,6 @@
 html {
-  font-size: 14px;
+  font-size: 15px;
+  
 }
 
 @media (min-width: 768px) {
@@ -18,4 +19,11 @@ body {
   color:#fff;
   background-color:#161414;
 }
-
+thead,
+tbody,
+tfoot,
+tr,
+td,
+th{
+    color: #fff;
+}

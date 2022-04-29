@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BookStoreWeb.Models.DataContext
+namespace BookStoreWeb.DataContext
 {
     public class ContextBook:DbContext
     {
@@ -13,7 +13,7 @@ namespace BookStoreWeb.Models.DataContext
 
         public ContextBook(DbContextOptions<ContextBook> options):base(options)
         {
-           //Database.EnsureCreated();
+           Database.EnsureCreated();
         }
 
         
@@ -30,6 +30,13 @@ namespace BookStoreWeb.Models.DataContext
         public ICollection<Genre> Genres { get; set; }
         public ICollection<Author> Authors { get; set; }
         public ICollection<Stock> Stocks { get; set; }
+
+        public Book()
+        {
+            this.Genres = new HashSet<Genre>();
+            this.Authors = new HashSet<Author>();
+            this.Stocks = new HashSet<Stock>();
+        }
     }
 
     public class Genre
@@ -48,6 +55,11 @@ namespace BookStoreWeb.Models.DataContext
         public string Biography { get; set; }
         public bool IsReader { get; set; }
         public ICollection<Book> Books { get; set; }
+
+        public Author()
+        {
+            this.Books = new HashSet<Book>();
+        }
         
     }
 
