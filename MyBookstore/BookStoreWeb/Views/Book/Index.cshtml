@@ -33,32 +33,27 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Img)
             </td>
-                <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Annotation)
-          <td>
-
-              <td>
-                            @{
-                                if (item.Authors != null)
-                                {
-                                        foreach(var mm in item.Authors)
-                                    {
-                                      @Html.DisplayFor(x => mm.Surname) 
-                                       @Html.DisplayFor(x => mm.Firstname) 
-                                        @Html.DisplayFor(x => mm.Secondname)
-                                    }
-                                }
-                                
-                            }
-                
-          <td>
-
+            </td>
+            <td>      
+                   @{
+                       foreach (var aa in item.Authors)
+                       {
+                           @Html.Display(aa.Surname)
+                       }
+                   }  
+            </td>
+            <td>
                 @Html.ActionLink("Редактировать", "Edit","Book",new{item.BookId,item.Title}) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Удалить","Delete","Book",new{item.BookId})
+
+            </td>
+                
            
         </tr>
 }

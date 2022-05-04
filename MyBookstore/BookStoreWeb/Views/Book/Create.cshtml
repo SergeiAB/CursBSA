@@ -1,10 +1,21 @@
-﻿<h4>ДОБАВИТЬ КНИГУ</h4>
-<form method="post">
-    <p>
+﻿<form method="post">
+<h4>Добавить:</h4>
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-sm">
+        <h5>ФОТО:</h5>
+        <img src="..." class="img-thumbnail" alt="....">
+      <p>
         <label>Фото обложки:</label><br />
         <input type="text" name="img"/>
     </p>
-    <p>
+    </div>
+
+    <div class="col-sm">      
+    <h5>КНИГА:</h5>
+       <p>
         <label>Название:</label><br />
         <input type="text" name="title"/>
     </p>
@@ -12,8 +23,9 @@
         <label>Аннотация:</label><br />
         <textarea name="annotation"></textarea>
     </p>
-
-    <p>
+    </div>
+    <div class="col-sm">
+       <p>
         <h5>АВТОР:</h5>
     </p>
     <p>
@@ -30,13 +42,17 @@
     </p>
     <p>
         <label>Биография:</label><br />
-        <input type="text" name="Biography"/>
+        <textarea name="Biography"></textarea>
     </p>
     <p>
         <label>Чтец:</label><br />
         <input type="checkbox" name="IsReader" value="false"/>
     </p>
-    <p>
+   
+
+    </div>
+    <div class="col-sm">
+     <p> 
         <h5>НА СКЛАД:</h5>
     </p>
      <p>
@@ -45,8 +61,12 @@
     </p>
     <p>
         <label>Цена:</label><br />
-        <input type="number" name="Price"/>
+        <input type="number" name="Price" step="0.01"/>
     </p>
+    </div>
+  </div>
+</div>
+
     <p>
         <input type="submit" value="Добавить в список"/>
     </p>
