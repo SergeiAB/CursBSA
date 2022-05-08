@@ -24,6 +24,12 @@
             <th>
                 <h6>Жанр</h6>
             </th>
+            <th>
+                <h6>Кол-во</h6>
+            </th>
+            <th>
+                <h6>Цена</h6>
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -40,13 +46,51 @@
                 @Html.DisplayFor(modelItem => item.Annotation)
             </td>
             <td>      
+                
                    @{
-                       foreach (var aa in item.Authors)
+                       foreach (var author in item.Authors)
                        {
-                           @Html.Display(aa.Surname)
+                           @Html.DisplayFor(modelItem=>author.Surname)
+                           <b> </b>
+                            @Html.DisplayFor(modelItem => author.Firstname)
+                            <b> </b>
+                            @Html.DisplayFor(modelItem => author.Secondname)
+                            
                        }
                    }  
             </td>
+
+             <td>      
+                   @{
+                       foreach (var genre in item.Genres)
+                       {
+                            @Html.DisplayFor(modelItem=>genre.Name)
+                       }
+                   }  
+            </td>
+
+            <td>      
+                   @{
+                       foreach (var stock in item.Stocks)
+                       {                     
+                            @Html.DisplayFor(modelItem=>stock.CountBook)
+                       }
+                   }  
+            </td>
+
+            <td>      
+                   @{
+                       foreach (var stock in item.Stocks)
+                       {
+                           
+                            
+                            @Html.DisplayFor(modelItem => stock.Price)
+                           
+
+                       }
+                   }  
+            </td>
+
             <td>
                 @Html.ActionLink("Редактировать", "Edit","Book",new{item.BookId,item.Title}) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |

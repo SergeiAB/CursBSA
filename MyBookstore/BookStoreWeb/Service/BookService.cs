@@ -1,6 +1,7 @@
 ﻿
 using BookStoreWeb.DataContext;
 using BookStoreWeb.MapingDB;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreWeb.Service
 {
@@ -15,7 +16,10 @@ namespace BookStoreWeb.Service
 
         public IEnumerable<Book> GetAllBooks()
         {
-            var books = _contextBook.Books;
+            var books = _contextBook.Books.Include(a=>a.Authors)
+                                          .Include(g => g.Genres)
+                                          .Include(p=>p.Stocks)
+                                          .ToList();
             return books;
         }
 
