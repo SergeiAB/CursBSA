@@ -23,13 +23,17 @@ namespace BookStoreWeb.Service
             return books;
         }
 
-        public void CreatBook(Book book, Author author, Stock stock)
+        public void CreatBook(Book book, Author author, Stock stock, Genre genre)
         {
             book.Stocks.Add(stock);
             book.Authors.Add(author);
             author.Books.Add(book);
+            book.Genres.Add(genre);
+            genre.Books.Add(book);
             _contextBook.Authors.Add(author);
             _contextBook.Books.Add(book);
+            _contextBook.Genres.Add(genre);
+            _contextBook.Stocks.Add(stock);
             _contextBook.SaveChanges();
         }
 

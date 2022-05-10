@@ -35,11 +35,11 @@ namespace BookStoreWeb.Controllers
         // POST: BookController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Book book, Author author,Stock stock)
+        public ActionResult Create(Book book, Author author,Stock stock, Genre genre)
         {
             try
             {
-                bookService.CreatBook(book, author, stock);
+                bookService.CreatBook(book, author, stock, genre);
 
                 return RedirectToAction("index");
                 

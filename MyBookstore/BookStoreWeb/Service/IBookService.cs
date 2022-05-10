@@ -7,6 +7,6 @@ namespace BookStoreWeb.Service
     {
         
         IEnumerable<Book> GetAllBooks();
-        void CreatBook(Book book, Author author, Stock stock);
+        void CreatBook(Book book, Author author, Stock stock, Genre genre);
     }
 }

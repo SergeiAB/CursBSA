@@ -23,8 +23,11 @@ namespace BookStoreWeb.DataContext
     {
         
         public int BookId { get; set; }//id книги
+        [Required]
         public string Img { get; set; }//путь к изображению книги
+        [Required]
         public string Title { get; set; }//название книги
+        [Required]
         public string Annotation { get; set; }//описание книги
         public bool IsFavorite { get; set; } //лидер продаж
         public ICollection<Genre> Genres { get; set; }
@@ -42,16 +45,25 @@ namespace BookStoreWeb.DataContext
     public class Genre
     {
         public int GenreId { get; set; }// id категории
+        [Required]
         public string Name { get; set; } //тип жанра:фантастика худ. литература и тд
         public ICollection<Book> Books { get; set; }// список книг текущей категории
+
+        public Genre() 
+        {
+            Books = new HashSet<Book>();
+        }
     }
 
     public class Author
     {
         public int AuthorId { get; set; }
+        [Required]
         public string Surname { get; set; }
+        [Required]
         public string Firstname { get; set; }
-        public string Secondname { get; set; }
+        public string? Secondname { get; set; }
+        [Required]
         public string Biography { get; set; }
         public bool IsReader { get; set; }
         public ICollection<Book> Books { get; set; }
@@ -65,8 +77,11 @@ namespace BookStoreWeb.DataContext
 
     public class Stock
     {
+        [Required]
         public int StockId { get; set; }
+        [Required]
         public int CountBook { get; set; }
+        [Required]
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
        
