@@ -1,0 +1,106 @@
+﻿@model IEnumerable<BookStoreWeb.DataContext.Book>
+
+<h4>Каталог книг</h4>
+
+<p>
+  @Html.ActionLink("Добавить книгу", "Create")
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h6>Обложка</h6>              
+            </th>
+            <th>
+                <h6>Название</h6>
+            </th>
+            <th>
+                <h6>Анотация</h6>
+            </th>
+            <th>
+                <h6>Автор</h6>
+            </th>
+            <th>
+                <h6>Жанр</h6>
+            </th>
+            <th>
+                <h6>Кол-во</h6>
+            </th>
+            <th>
+                <h6>Цена</h6>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Img)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Annotation)
+            </td>
+            <td>      
+                
+                   @{
+                       foreach (var author in item.Authors)
+                       {
+                           @Html.DisplayFor(modelItem=>author.Surname)
+                           <b> </b>
+                            @Html.DisplayFor(modelItem => author.Firstname)
+                            <b> </b>
+                            @Html.DisplayFor(modelItem => author.Secondname)
+                            
+                       }
+                   }  
+            </td>
+
+             <td>      
+                   @{
+                       foreach (var genre in item.Genres)
+                       {
+                            @Html.DisplayFor(modelItem=>genre.Name)
+                       }
+                   }  
+            </td>
+
+            <td>      
+                   @{
+                       foreach (var stock in item.Stocks)
+                       {                     
+                            @Html.DisplayFor(modelItem=>stock.CountBook)
+                       }
+                   }  
+            </td>
+
+            <td>      
+                   @{
+                       foreach (var stock in item.Stocks)
+                       {
+                           
+                            
+                            @Html.DisplayFor(modelItem => stock.Price)
+                           
+
+                       }
+                   }  
+            </td>
+
+            <td>
+                @Html.ActionLink("Редактировать", "Edit","Book",new{item.BookId,item.Title}) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Удалить","Delete","Book",new{item.BookId})
+
+            </td>
+                
+           
+        </tr>
+}
+    </tbody>
+</table>
+
