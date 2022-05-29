@@ -55,7 +55,7 @@
                             @Html.DisplayFor(modelItem => author.Firstname)
                             <b> </b>
                             @Html.DisplayFor(modelItem => author.Secondname)
-                            
+                            <br/>
                        }
                    }  
             </td>
@@ -64,7 +64,7 @@
                    @{
                        foreach (var genre in item.Genres)
                        {
-                            @Html.DisplayFor(modelItem=>genre.Name)
+                            @Html.DisplayFor(modelItem=>genre.Name)<br/>
                        }
                    }  
             </td>

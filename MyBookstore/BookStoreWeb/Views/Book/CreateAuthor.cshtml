@@ -1,0 +1,72 @@
+﻿@model BookStoreWeb.DataContext.Author
+
+@{
+    ViewData["Title"] = "Добавить автора";
+}
+
+<h4>Новый автор:</h4>
+
+<hr />
+<form asp-action="CreateAuthor">
+<div class="row">
+    <div class="col-md-3">
+        
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label">Фамилия:</label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Firstname" class="control-label">Имя:</label>
+                <input asp-for="Firstname" class="form-control" />
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Secondname" class="control-label">Отчество:</label>
+                <input asp-for="Secondname" class="form-control" />
+                <span asp-validation-for="Secondname" class="text-danger"></span>
+            </div>
+           
+
+            <div class="form-group">
+                <label class="form-check-label">Чтец:</label><br/>
+                <input asp-for="IsReader" class="form-check-input" />
+                
+            </div>
+            <p>
+                <div class="form-group">
+                    <input type="submit" value="Добавить" class="btn btn-primary" />
+                </div>
+
+            </p>
+            
+       
+    </div>
+    <div class="col-md-5">
+
+       
+            <div class="form-group">
+                <label asp-for="Biography" class="control-label">Биография автора:</label>
+                <textarea asp-for="Biography" class="form-control" rows="6"></textarea>
+   
+        </div>
+
+
+        
+        
+    </div>
+</div>
+</form>
+<hr />
+<div>
+    <a asp-action="Create">Меню добавление книги</a>
+</div>
+<hr />
+<div>
+    <a asp-action="index">Меню список книг</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

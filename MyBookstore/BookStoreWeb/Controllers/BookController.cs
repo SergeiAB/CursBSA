@@ -29,17 +29,21 @@ namespace BookStoreWeb.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            var genre = bookService.GetAllGenre();
+            var author = bookService.GetAllAutors();
+            ViewBag.Genre = genre;
+            ViewBag.Author = author;
             return View();
         }
 
         // POST: BookController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Book book, Author author,Stock stock, Genre genre)
+        public ActionResult Create(Book book, int[] selectAuthor,Stock stock, int[] selectGenre)
         {
             try
             {
-                bookService.CreatBook(book, author, stock, genre);
+                bookService.CreatBook(book, selectAuthor, stock, selectGenre);
 
                 return RedirectToAction("index");
                 
@@ -90,6 +94,48 @@ namespace BookStoreWeb.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult CreateGenre(Genre genre)
+        {
+            try
+            {
+               bookService.CreatGenre(genre);
+               return RedirectToAction("Create");
+            }
+            catch
+            {
+                return View();
+            }
+            
+        }
+        [HttpGet]
+        public ActionResult CreateGenre()
+        {
+            
+            return View();
+        }
+        
+        [HttpGet]
+        public ActionResult CreateAuthor()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateAuthor(Author author)
+        {
+            try
+            {
+                bookService.CreateAuthor(author);
+                return RedirectToAction("Create");
+            }
+            catch
+            {
+                return View();
+            }
+
         }
     }
 }

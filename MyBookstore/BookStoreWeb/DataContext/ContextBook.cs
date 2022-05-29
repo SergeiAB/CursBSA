@@ -59,9 +59,12 @@ namespace BookStoreWeb.DataContext
     {
         public int AuthorId { get; set; }
         [Required]
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
         public string Surname { get; set; }
         [Required]
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
         public string Firstname { get; set; }
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
         public string? Secondname { get; set; }
         [Required]
         public string Biography { get; set; }
@@ -77,12 +80,13 @@ namespace BookStoreWeb.DataContext
 
     public class Stock
     {
-        [Required]
+       
         public int StockId { get; set; }
-        [Required]
+       
         public int CountBook { get; set; }
-        [Required]
-        [Column(TypeName = "money")]
+
+       
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
        
     }

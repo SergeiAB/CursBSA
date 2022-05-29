@@ -23,21 +23,68 @@ namespace BookStoreWeb.Service
             return books;
         }
 
-        public void CreatBook(Book book, Author author, Stock stock, Genre genre)
+        public void CreatBook(Book book, int[] selectAutor, Stock stock, int[] selectGenre)
         {
+            if (selectGenre != null)
+            {
+                foreach(var genre in _contextBook.Genres.Where(x => selectGenre.Contains(x.GenreId)))
+                {
+                    book.Genres.Add(genre);
+                }
+            }
+            if(selectAutor != null)
+            {
+                foreach(var autor in _contextBook.Authors.Where(x => selectAutor.Contains(x.AuthorId)))
+                {
+                    book.Authors.Add(autor);
+                }
+            }
+
+            //book.Authors.Add(author);
+            //author.Books.Add(book);
+            //book.Genres.Add(genre);
+            //genre.Books.Add(book);
             book.Stocks.Add(stock);
-            book.Authors.Add(author);
-            author.Books.Add(book);
-            book.Genres.Add(genre);
-            genre.Books.Add(book);
-            _contextBook.Authors.Add(author);
+            //_contextBook.Authors.Add(author);
             _contextBook.Books.Add(book);
-            _contextBook.Genres.Add(genre);
+            //_contextBook.Genres.Add(genre);
             _contextBook.Stocks.Add(stock);
             _contextBook.SaveChanges();
         }
 
-        
-        
+        public IEnumerable<Genre> GetAllGenre()
+        {
+            var genre =_contextBook.Genres.ToList();
+            return genre;
+        }
+
+        public IEnumerable<Author> GetAllAutors()
+        {
+            var autor = _contextBook.Authors.ToList();
+            return autor;
+        }
+
+        public void CreatGenre(Genre genre)
+        {
+            _contextBook.Genres.Add(genre);
+            _contextBook.SaveChanges();
+        }
+        public void DeleteGenre(int[] selectGenre)
+        {
+            if (selectGenre != null)
+            {
+                foreach (var genre in _contextBook.Genres.Where(x => selectGenre.Contains(x.GenreId)))
+                {
+                    _contextBook.Genres.Remove(genre);
+                }
+                _contextBook.SaveChanges();
+            }
+        }
+
+        public void CreateAuthor(Author author)
+        {
+            _contextBook.Authors.Add(author);
+            _contextBook.SaveChanges();
+        }
     }
 }

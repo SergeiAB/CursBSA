@@ -34,7 +34,7 @@ namespace BookStoreWeb.Migrations
 
                     b.HasIndex("BooksBookId");
 
-                    b.ToTable("AuthorBook");
+                    b.ToTable("AuthorBook", (string)null);
                 });
 
             modelBuilder.Entity("BookGenre", b =>
@@ -49,7 +49,7 @@ namespace BookStoreWeb.Migrations
 
                     b.HasIndex("GenresGenreId");
 
-                    b.ToTable("BookGenre");
+                    b.ToTable("BookGenre", (string)null);
                 });
 
             modelBuilder.Entity("BookStoreWeb.DataContext.Author", b =>
@@ -80,7 +80,7 @@ namespace BookStoreWeb.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("BookStoreWeb.DataContext.Book", b =>
@@ -108,7 +108,7 @@ namespace BookStoreWeb.Migrations
 
                     b.HasKey("BookId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("BookStoreWeb.DataContext.Genre", b =>
@@ -125,7 +125,7 @@ namespace BookStoreWeb.Migrations
 
                     b.HasKey("GenreId");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("BookStoreWeb.DataContext.Stock", b =>
@@ -149,7 +149,7 @@ namespace BookStoreWeb.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("Stocks");
+                    b.ToTable("Stocks", (string)null);
                 });
 
             modelBuilder.Entity("AuthorBook", b =>
