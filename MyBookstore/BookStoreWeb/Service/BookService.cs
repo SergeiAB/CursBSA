@@ -8,10 +8,12 @@ namespace BookStoreWeb.Service
     public class BookService:IBookService
     {
         private ContextBook _contextBook;
+        private IWebHostEnvironment _appEnvironment;
 
-        public BookService(ContextBook contextBook)
+        public BookService(ContextBook contextBook, IWebHostEnvironment appEnvironment)
         {
             _contextBook = contextBook;
+            _appEnvironment=appEnvironment;
         }
 
         public IEnumerable<Book> GetAllBooks()
@@ -23,8 +25,10 @@ namespace BookStoreWeb.Service
             return books;
         }
 
-        public void CreatBook(Book book, int[] selectAutor, Stock stock, int[] selectGenre)
+        public void CreatBook(Book book, int[] selectAutor, Stock stock, int[] selectGenre, IFormFile uploadedFhoto)
         {
+            book.Img = AddFile(uploadedFhoto);
+
             if (selectGenre != null)
             {
                 foreach(var genre in _contextBook.Genres.Where(x => selectGenre.Contains(x.GenreId)))
@@ -40,14 +44,8 @@ namespace BookStoreWeb.Service
                 }
             }
 
-            //book.Authors.Add(author);
-            //author.Books.Add(book);
-            //book.Genres.Add(genre);
-            //genre.Books.Add(book);
             book.Stocks.Add(stock);
-            //_contextBook.Authors.Add(author);
             _contextBook.Books.Add(book);
-            //_contextBook.Genres.Add(genre);
             _contextBook.Stocks.Add(stock);
             _contextBook.SaveChanges();
         }
@@ -85,6 +83,27 @@ namespace BookStoreWeb.Service
         {
             _contextBook.Authors.Add(author);
             _contextBook.SaveChanges();
+        }
+
+        private  string AddFile(IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                // путь к папке Images
+                string path = "/Images/" + uploadedFile.FileName;
+                // сохраняем файл в папку Images в каталоге BookStoreWeb
+                using (var fileStream = new FileStream(_appEnvironment.ContentRootPath + path, FileMode.Create))
+                {
+                    uploadedFile.CopyTo(fileStream);
+                }
+               
+                return path;
+            }
+            else
+            {
+                return string.Empty;
+            }
+            
         }
     }
 }

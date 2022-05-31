@@ -35,9 +35,12 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-         <tr>
+            var path = $"~/{item.Img}";
+            <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Img)
+                @*@Html.DisplayFor(modelItem => item.Img)*@
+               @* <br/>*@
+                <img src="@Url.Action("GetFile","Book",new{id=item.BookId})" alt="Нет фото" width="100">
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)

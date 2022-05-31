@@ -8,10 +8,12 @@ namespace BookStoreWeb.Controllers
     public class BookController : Controller
     {
         IBookService bookService;
+        IWebHostEnvironment _appEnvironment;
 
-        public BookController(IBookService bookService)
+        public BookController(IBookService bookService, IWebHostEnvironment appEnvironment)
         {
             this.bookService = bookService;
+            _appEnvironment = appEnvironment;
         }
         // GET: BookController
         public ActionResult Index()
@@ -36,14 +38,16 @@ namespace BookStoreWeb.Controllers
             return View();
         }
 
+        
+
         // POST: BookController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Book book, int[] selectAuthor,Stock stock, int[] selectGenre)
+        public ActionResult Create(Book book, int[] selectAuthor,Stock stock, int[] selectGenre, IFormFile uploadedFhoto)
         {
             try
             {
-                bookService.CreatBook(book, selectAuthor, stock, selectGenre);
+                bookService.CreatBook(book, selectAuthor, stock, selectGenre, uploadedFhoto);
 
                 return RedirectToAction("index");
                 
@@ -136,6 +140,18 @@ namespace BookStoreWeb.Controllers
                 return View();
             }
 
+        }
+
+        public FileContentResult GetFile(int id)
+        {
+            //string basePath = Environment.CurrentDirectory;
+            string basePath = _appEnvironment.ContentRootPath;
+            var book = bookService.GetAllBooks();
+            var pathFoto=book.Where(x=>x.BookId==id).FirstOrDefault().Img;
+            var type = "image/jpeg";
+            string fullPath = $"{basePath}{pathFoto}";
+            var bytes = System.IO.File.ReadAllBytes(fullPath);
+            return File(bytes, type);
         }
     }
 }

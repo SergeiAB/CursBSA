@@ -1,4 +1,5 @@
-﻿<form method="post">
+﻿
+<form method="post" enctype="multipart/form-data">
 <h4>Добавить:</h4>
 
     <div class="container">
@@ -6,11 +7,19 @@
 
         <div class="col-sm">
             <h5>ФОТО:</h5>
-            <img src="..." class="img-thumbnail" alt="....">
-                  <p>
-                    <label>Фото обложки:</label><br />
-                    <input type="text" name="img"/>
-                 </p>
+           
+            <p>
+                 <label for="uploadedFhoto">Обложка:</label>
+                 <input type="file" name="uploadedFhoto" id="photo" />
+                
+            </p> 
+                <div style="padding:10px;">
+                    
+                        <img src="photo" alt="Нет фото" width="300" />
+                   
+                </div>
+
+
         </div>
 
 
