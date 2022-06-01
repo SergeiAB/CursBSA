@@ -27,7 +27,8 @@ namespace BookStoreWeb.Service
 
         public void CreatBook(Book book, int[] selectAutor, Stock stock, int[] selectGenre, IFormFile uploadedFhoto)
         {
-            book.Img = AddFile(uploadedFhoto);
+           
+            book.Img = AddFile(uploadedFhoto, book);
 
             if (selectGenre != null)
             {
@@ -85,12 +86,18 @@ namespace BookStoreWeb.Service
             _contextBook.SaveChanges();
         }
 
-        private  string AddFile(IFormFile uploadedFile)
+        private  string AddFile(IFormFile uploadedFile, Book book)
         {
+
             if (uploadedFile != null)
             {
+                string nameBook = book.Title.Trim().Replace(' ','_');
+                var num= uploadedFile.FileName.IndexOf('.');
+                var typeFile = uploadedFile.FileName.Substring(num);
                 // путь к папке Images
-                string path = "/Images/" + uploadedFile.FileName;
+               // string path = "/Images/" + uploadedFile.FileName;
+                string path = "/Images/" + Guid.NewGuid().ToString()+"_"+nameBook+typeFile;
+
                 // сохраняем файл в папку Images в каталоге BookStoreWeb
                 using (var fileStream = new FileStream(_appEnvironment.ContentRootPath + path, FileMode.Create))
                 {

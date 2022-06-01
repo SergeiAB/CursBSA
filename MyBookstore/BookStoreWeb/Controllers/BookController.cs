@@ -144,7 +144,7 @@ namespace BookStoreWeb.Controllers
 
         public FileContentResult GetFile(int id)
         {
-            //string basePath = Environment.CurrentDirectory;
+            
             string basePath = _appEnvironment.ContentRootPath;
             var book = bookService.GetAllBooks();
             var pathFoto=book.Where(x=>x.BookId==id).FirstOrDefault().Img;
