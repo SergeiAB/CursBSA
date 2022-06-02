@@ -43,11 +43,11 @@ namespace BookStoreWeb.Controllers
         // POST: BookController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Book book, int[] selectAuthor,Stock stock, int[] selectGenre, IFormFile uploadedFhoto)
+        public ActionResult Create(Book book, int[] selectAuthor, int[] selectGenre, IFormFile uploadedFhoto)
         {
             try
             {
-                bookService.CreatBook(book, selectAuthor, stock, selectGenre, uploadedFhoto);
+                bookService.CreatBook(book, selectAuthor, selectGenre, uploadedFhoto);
 
                 return RedirectToAction("index");
                 
@@ -80,9 +80,10 @@ namespace BookStoreWeb.Controllers
         }
 
         // GET: BookController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteBook(int id)
         {
-            return View();
+            bookService.DeleteBook(id);
+            return RedirectToAction("index");
         }
 
         // POST: BookController/Delete/5

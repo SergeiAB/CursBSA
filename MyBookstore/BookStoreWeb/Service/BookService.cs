@@ -20,12 +20,11 @@ namespace BookStoreWeb.Service
         {
             var books = _contextBook.Books.Include(a=>a.Authors)
                                           .Include(g => g.Genres)
-                                          .Include(p=>p.Stocks)
                                           .ToList();
             return books;
         }
 
-        public void CreatBook(Book book, int[] selectAutor, Stock stock, int[] selectGenre, IFormFile uploadedFhoto)
+        public void CreatBook(Book book, int[] selectAutor, int[] selectGenre, IFormFile uploadedFhoto)
         {
            
             book.Img = AddFile(uploadedFhoto, book);
@@ -45,10 +44,31 @@ namespace BookStoreWeb.Service
                 }
             }
 
-            book.Stocks.Add(stock);
+            
             _contextBook.Books.Add(book);
-            _contextBook.Stocks.Add(stock);
             _contextBook.SaveChanges();
+        }
+
+        public void DeleteBook(int id)
+        {
+            var book=_contextBook.Books.Where(x=>x.BookId == id).FirstOrDefault();
+            if (book != null)
+            {
+                var path =_appEnvironment.ContentRootPath + book.Img;
+                try
+                {
+                    _contextBook.Books.Remove(book);
+                    _contextBook.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message, ex);
+                }
+                File.Delete(path);
+
+            }
+            
+                
         }
 
         public IEnumerable<Genre> GetAllGenre()

@@ -9,7 +9,8 @@ namespace BookStoreWeb.Service
         IEnumerable<Book> GetAllBooks();
         IEnumerable<Genre> GetAllGenre(); 
         IEnumerable<Author> GetAllAutors();
-        void CreatBook(Book book, int[] selectAuthor, Stock stock, int[] selectGenre, IFormFile uploadedFhoto);
+        void CreatBook(Book book, int[] selectAuthor, int[] selectGenre, IFormFile uploadedFhoto);
+        void DeleteBook(int id);
         void CreatGenre(Genre genre);
         void CreateAuthor(Author author);
     }

@@ -4,7 +4,7 @@
 
 namespace BookStoreWeb.Migrations
 {
-    public partial class CreatDb : Migration
+    public partial class CretDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace BookStoreWeb.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Firstname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Secondname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Secondname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Biography = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsReader = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -34,7 +34,9 @@ namespace BookStoreWeb.Migrations
                     Img = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Annotation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsFavorite = table.Column<bool>(type: "bit", nullable: false)
+                    IsFavorite = table.Column<bool>(type: "bit", nullable: false),
+                    CountBook = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(6,2)", precision: 6, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,26 +81,6 @@ namespace BookStoreWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Stocks",
-                columns: table => new
-                {
-                    StockId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CountBook = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "money", nullable: false),
-                    BookId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Stocks", x => x.StockId);
-                    table.ForeignKey(
-                        name: "FK_Stocks_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "BookId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BookGenre",
                 columns: table => new
                 {
@@ -131,11 +113,6 @@ namespace BookStoreWeb.Migrations
                 name: "IX_BookGenre_GenresGenreId",
                 table: "BookGenre",
                 column: "GenresGenreId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Stocks_BookId",
-                table: "Stocks",
-                column: "BookId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -147,16 +124,13 @@ namespace BookStoreWeb.Migrations
                 name: "BookGenre");
 
             migrationBuilder.DropTable(
-                name: "Stocks");
-
-            migrationBuilder.DropTable(
                 name: "Authors");
 
             migrationBuilder.DropTable(
-                name: "Genres");
+                name: "Books");
 
             migrationBuilder.DropTable(
-                name: "Books");
+                name: "Genres");
         }
     }
 }

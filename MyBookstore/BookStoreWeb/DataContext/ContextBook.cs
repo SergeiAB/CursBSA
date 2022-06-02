@@ -9,14 +9,19 @@ namespace BookStoreWeb.DataContext
         public DbSet<Book> Books { get; set; } = null!;
         public DbSet<Author> Authors { get; set; } = null!;
         public DbSet<Genre> Genres { get; set; } = null!;
-        public DbSet<Stock> Stocks { get; set; } = null!;
+       
 
         public ContextBook(DbContextOptions<ContextBook> options):base(options)
         {
            Database.EnsureCreated();
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Book>().Property(p => p.Price)
+                .HasPrecision(6, 2);
+        }
 
-        
+
     }
 
     public class Book
@@ -30,15 +35,18 @@ namespace BookStoreWeb.DataContext
         [Required]
         public string Annotation { get; set; }//описание книги
         public bool IsFavorite { get; set; } //лидер продаж
+        public int CountBook { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal Price { get; set; }
         public ICollection<Genre> Genres { get; set; }
         public ICollection<Author> Authors { get; set; }
-        public ICollection<Stock> Stocks { get; set; }
+        
 
         public Book()
         {
             this.Genres = new HashSet<Genre>();
             this.Authors = new HashSet<Author>();
-            this.Stocks = new HashSet<Stock>();
+            
         }
     }
 
@@ -78,17 +86,8 @@ namespace BookStoreWeb.DataContext
         
     }
 
-    public class Stock
-    {
+  
        
-        public int StockId { get; set; }
-       
-        public int CountBook { get; set; }
-
-       
-        [DataType(DataType.Currency)]
-        public decimal Price { get; set; }
-       
-    }
+    
 
 }

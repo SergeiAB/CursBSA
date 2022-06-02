@@ -73,31 +73,24 @@
             </td>
 
             <td>      
-                   @{
-                       foreach (var stock in item.Stocks)
-                       {                     
-                            @Html.DisplayFor(modelItem=>stock.CountBook)
-                       }
-                   }  
+                     
+                            @Html.DisplayFor(modelItem=>item.CountBook)
+                      
+                   
             </td>
 
             <td>      
-                   @{
-                       foreach (var stock in item.Stocks)
-                       {
+    
                            
                             
-                            @Html.DisplayFor(modelItem => stock.Price)
-                           
-
-                       }
-                   }  
+                            @Html.DisplayFor(modelItem => item.Price)
+                
             </td>
 
             <td>
-                @Html.ActionLink("Редактировать", "Edit","Book",new{item.BookId,item.Title}) |
+                @Html.ActionLink("Редактировать", "EditBook","Book",new{item.BookId,item.Title}) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Удалить","Delete","Book",new{item.BookId})
+                @Html.ActionLink("Удалить","DeleteBook","Book",new{id=item.BookId})
 
             </td>
                 
