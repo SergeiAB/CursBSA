@@ -38,8 +38,7 @@
             var path = $"~/{item.Img}";
             <tr>
             <td>
-                @*@Html.DisplayFor(modelItem => item.Img)*@
-               @* <br/>*@
+              
                 <img src="@Url.Action("GetFile","Book",new{id=item.BookId})" alt="Нет фото" width="100">
             </td>
             <td>
@@ -72,23 +71,16 @@
                    }  
             </td>
 
-            <td>      
-                     
+            <td>             
                             @Html.DisplayFor(modelItem=>item.CountBook)
-                      
-                   
             </td>
 
             <td>      
-    
-                           
-                            
                             @Html.DisplayFor(modelItem => item.Price)
-                
             </td>
 
             <td>
-                @Html.ActionLink("Редактировать", "EditBook","Book",new{item.BookId,item.Title}) |
+                @Html.ActionLink("Редактировать", "EditBook","Book",new{id=item.BookId}) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Удалить","DeleteBook","Book",new{id=item.BookId})
 

@@ -1,0 +1,171 @@
+﻿@model BookStoreWeb.DataContext.Book
+<script src='@Url.Content("~/lib/jquery/dist/jquery.min.js")'></script>
+@{
+    ViewData["Title"] = "EditBook";
+}
+
+
+
+<h4>Редактирование книги:</h4>
+<hr />
+ <form method="post" enctype="multipart/form-data"> @*asp-controller="Book" asp-route-id="@Model.BookId*@
+        <div class="row">
+            <div class="col-md-4">
+       
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @*<div class="form-group">
+                        <label asp-for="Img" class="control-label">Фото обложки:</label>
+                        <input asp-for="Img" class="form-control" />
+                        <span asp-validation-for="Img" class="text-danger"></span>
+                    </div>*@
+                    <h6>Обложка:</h6>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <td>
+                                <img src="@Url.Action("GetFile","Book",new{id=Model.BookId})" alt="Нет фото" width="150">
+                            </td>
+                        </div>
+                
+                        <div class="col-md-5">
+                   
+                                <td>
+                                     <label for="editFhoto">Изменить обложку:</label>
+                                     <input type="file" name="editFhoto" id="photo" />
+                                </td>
+                   
+                        </div>
+
+            
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label">Название книги:</label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+           
+                    <div class="form-group">
+                        <label asp-for="CountBook" class="control-label">Количество книг:</label>
+                        <input asp-for="CountBook" class="form-control" />
+                        <span asp-validation-for="CountBook" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label">Цена книги:</label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+
+        
+            </div>
+             <div class="col-md-4">
+                        <label asp-for="Annotation" class="control-label">Аннотация:</label>
+                        <textarea asp-for="Annotation" class="form-control" rows="6"></textarea>
+                        <span asp-validation-for="Annotation" class="text-danger"></span>
+            </div>
+        </div>
+</form>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    var Image_Upload_Preview = function( file_input, image_element ){
+    this.is_supported = function(){
+
+        if( ! FileReader instanceof Function ){
+            console.error(':( Your browser noes not support the FileReader...');
+            return false;
+        }
+    };
+
+    this.validate_inputs = function(){
+
+        /**
+         * Fail if:
+         * 1. Not a HTML Input Element
+         * 2. Not a File Input Element
+         *
+         */
+        if( ! $(file_input).get(0) instanceof HTMLInputElement || $(file_input).first().attr('type') != 'file' ){
+            console.error( 'Invalid Element provided...' );
+            return false;
+        }
+
+        /**
+         * Fail if:
+         * 1. Image Element provided is invalid
+         */
+        if( ! $(image_element).get(0) instanceof HTMLImageElement ){
+            console.error( 'Invalid Image Element provided...' );
+            return false;
+        }
+
+    };
+
+
+    /**
+     * Only proceed if all the preliminary checks have passed
+     */
+    if( this.is_supported() || this.validate_inputs() ){
+        return false;
+    }
+
+
+    /**
+     * Set the file input to only accept images
+     */
+    $(file_input).attr('accept','image/*');
+
+
+    $(file_input).change(function(){
+
+        /**
+         * Fail if:
+         * 1. 'files' data is non existent
+         * 2. 'files' data has no data in it
+         */
+        if( !this.files || this.files.length < 1 ){
+            console.error('No files data exists for this file input...');
+            return false;
+        }
+
+
+        var file_reader = new FileReader();
+
+        file_reader.onload = function( reader_result ) {
+
+            var image_result = null;
+
+            /**
+             * Legacy lookup for the result
+             */
+            image_result = reader_result.target && reader_result.target.result ? reader_result.target.result : image_result ;
+            image_result = !image_result && reader_result.srcElement && reader_result.srcElement.result ? reader_result.srcElement.result : image_result ;
+
+            $( image_element ).attr( 'src', image_result );
+        };
+
+        file_reader.readAsDataURL( this.files[0] );
+    });
+
+};
+
+
+$(document).ready(function(){
+
+    /**
+     * Example Usages
+     */
+    // new Image_Upload_Preview( document.getElementById('file_input_demo'), $('img') );
+    new Image_Upload_Preview( $('input[type=file]'), $('img') );
+});
+</script>

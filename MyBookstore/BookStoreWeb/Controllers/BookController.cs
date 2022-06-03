@@ -58,19 +58,23 @@ namespace BookStoreWeb.Controllers
             }
         }
 
-        // GET: BookController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public ActionResult EditBook(int id)
         {
-            return View();
+            
+            return View(bookService.GetBook(id));
         }
+
 
         // POST: BookController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        //[ValidateAntiForgeryToken]
+        public ActionResult EditBook(int id,Book newBook, IFormCollection collection, IFormFile editFhoto)
         {
+            
             try
             {
+                bookService.EditBook(id, newBook, editFhoto);
                 return RedirectToAction(nameof(Index));
             }
             catch

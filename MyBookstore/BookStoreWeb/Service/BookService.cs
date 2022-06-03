@@ -132,5 +132,48 @@ namespace BookStoreWeb.Service
             }
             
         }
+
+        public Book GetBook(int id)
+        {
+            var book = _contextBook.Books.Where(x => x.BookId == id).Include(a => a.Authors)
+                                          .Include(g => g.Genres).FirstOrDefault();
+                                        ;
+            if (book != null)
+            {
+                return book;
+            }
+            else
+            {
+                throw new ArgumentNullException("В списке такой книги нет");
+            }
+            
+        }
+
+        public void EditBook(int id, Book newBook, IFormFile editFhoto)
+        {
+            
+            if(newBook != null)
+            {
+                string img;
+                if(editFhoto != null)
+                {
+                    var oldPath = _appEnvironment.ContentRootPath + newBook.Img;
+                    img = AddFile(editFhoto,newBook);
+                    File.Delete(oldPath);
+                }
+                else
+                {
+                    img = newBook.Img;
+                }
+                var book = _contextBook.Books.Where(x => x.BookId == id).FirstOrDefault();
+                book.Img = img;
+                book.Title = newBook.Title;
+                book.Annotation = newBook.Annotation;
+                book.IsFavorite = newBook.IsFavorite;
+                book.CountBook = newBook.CountBook;
+                book.Price = newBook.Price;
+                _contextBook.SaveChanges();
+            }
+        }
     }
 }
