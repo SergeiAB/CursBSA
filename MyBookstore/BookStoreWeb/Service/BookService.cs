@@ -73,13 +73,13 @@ namespace BookStoreWeb.Service
 
         public IEnumerable<Genre> GetAllGenre()
         {
-            var genre =_contextBook.Genres.ToList();
+            var genre =_contextBook.Genres.OrderBy(p => p.Name).ToList();
             return genre;
         }
 
         public IEnumerable<Author> GetAllAutors()
         {
-            var autor = _contextBook.Authors.ToList();
+            var autor = _contextBook.Authors.OrderBy(p => p.Surname).ThenBy(u => u.Firstname).ToList();
             return autor;
         }
 
@@ -137,7 +137,7 @@ namespace BookStoreWeb.Service
         {
             var book = _contextBook.Books.Where(x => x.BookId == id).Include(a => a.Authors)
                                           .Include(g => g.Genres).FirstOrDefault();
-                                        ;
+                                        
             if (book != null)
             {
                 return book;
@@ -147,9 +147,18 @@ namespace BookStoreWeb.Service
                 throw new ArgumentNullException("В списке такой книги нет");
             }
             
+            
         }
 
-        public void EditBook(int id, Book newBook, IFormFile editFhoto)
+        public void deleteAuthorForBook(int bookId, int authorId)
+        {
+            var book = _contextBook.Books.Where(x => x.BookId == bookId).Include(a => a.Authors)
+                                          .FirstOrDefault();
+            var author=book.Authors.First(x=>x.AuthorId==authorId);
+            book.Authors.Remove(author);
+            _contextBook.SaveChanges();
+        }
+        public void EditBook(int id, Book newBook, int[] selGenres, int[] delGenres, IFormFile editFhoto, int[] selAuthors, int[] delAuthors)
         {
             
             if(newBook != null)
@@ -165,13 +174,52 @@ namespace BookStoreWeb.Service
                 {
                     img = newBook.Img;
                 }
-                var book = _contextBook.Books.Where(x => x.BookId == id).FirstOrDefault();
+                var book = GetBook(id);
+
                 book.Img = img;
                 book.Title = newBook.Title;
                 book.Annotation = newBook.Annotation;
                 book.IsFavorite = newBook.IsFavorite;
                 book.CountBook = newBook.CountBook;
                 book.Price = newBook.Price;
+
+                if(selGenres.Length > 0)
+                {
+                    foreach (int i in selGenres)
+                    {
+                        var genre = _contextBook.Genres.Where(x => x.GenreId == i).FirstOrDefault();
+                        book.Genres.Add(genre);
+                    }
+
+                }
+                if (delGenres.Length > 0)
+                {
+                    foreach (int i in delGenres)
+                    {
+                        var genre = book.Genres.First(x=>x.GenreId==i);
+                        book.Genres.Remove(genre);
+                    }
+
+                }
+
+                if (selAuthors.Length > 0)
+                {
+                    foreach (int i in selAuthors)
+                    {
+                        var author = _contextBook.Authors.Where(x => x.AuthorId == i).FirstOrDefault();
+                        book.Authors.Add(author);
+                    }
+
+                }
+                if (delAuthors.Length > 0)
+                {
+                    foreach (int i in delAuthors)
+                    {
+                        var author = book.Authors.First(x => x.AuthorId == i);
+                        book.Authors.Remove(author);
+                    }
+
+                }
                 _contextBook.SaveChanges();
             }
         }

@@ -14,6 +14,6 @@ namespace BookStoreWeb.Service
         void DeleteBook(int id);
         void CreatGenre(Genre genre);
         void CreateAuthor(Author author);
-        void EditBook(int id, Book newBook, IFormFile editFhoto);
+        void EditBook(int id, Book newBook, int[] selGenres, int[] delGenres, IFormFile editFhoto, int[] selAuthors, int[] delAuthors);
     }
 }

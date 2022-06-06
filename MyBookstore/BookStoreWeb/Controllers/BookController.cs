@@ -1,6 +1,5 @@
 ﻿using BookStoreWeb.DataContext;
 using BookStoreWeb.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreWeb.Controllers
@@ -61,26 +60,22 @@ namespace BookStoreWeb.Controllers
         [HttpGet]
         public ActionResult EditBook(int id)
         {
-            
-            return View(bookService.GetBook(id));
+            ViewBag.Genre = bookService.GetAllGenre();
+            ViewBag.Author = bookService.GetAllAutors();
+            var book= bookService.GetBook(id);
+            return View(book);
         }
 
 
         // POST: BookController/Edit/5
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult EditBook(int id,Book newBook, IFormCollection collection, IFormFile editFhoto)
+        public ActionResult EditBook(int id,Book newBook,int[] selGenres, int[] delGenres, IFormFile editFhoto, int[] selAuthors, int[] delAuthors)
         {
-            
-            try
-            {
-                bookService.EditBook(id, newBook, editFhoto);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+       
+                bookService.EditBook(id, newBook,  selGenres, delGenres, editFhoto,selAuthors, delAuthors);
+                return RedirectToAction("index");
+ 
         }
 
         // GET: BookController/Delete/5
@@ -155,7 +150,7 @@ namespace BookStoreWeb.Controllers
             var pathFoto=book.Where(x=>x.BookId==id).FirstOrDefault().Img;
             var type = "image/jpeg";
             string fullPath = $"{basePath}{pathFoto}";
-            var bytes = System.IO.File.ReadAllBytes(fullPath);
+            byte[]? bytes = System.IO.File.ReadAllBytes(fullPath);
             return File(bytes, type);
         }
     }
