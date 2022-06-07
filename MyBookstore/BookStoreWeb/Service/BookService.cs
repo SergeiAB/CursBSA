@@ -18,7 +18,7 @@ namespace BookStoreWeb.Service
 
         public IEnumerable<Book> GetAllBooks()
         {
-            var books = _contextBook.Books.Include(a=>a.Authors)
+            var books = _contextBook.Books.OrderBy(x=>x.Title).Include(a=>a.Authors)
                                           .Include(g => g.Genres)
                                           .ToList();
             return books;

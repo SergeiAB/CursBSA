@@ -22,9 +22,10 @@ namespace BookStoreWeb.Controllers
         }
 
         // GET: BookController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult DetailsBook(int id)
         {
-            return View();
+            var book= bookService.GetBook(id);
+            return View(book);
         }
 
         [HttpGet]

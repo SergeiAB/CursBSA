@@ -1,0 +1,113 @@
+﻿@model BookStoreWeb.DataContext.Book
+
+@{
+    ViewData["Title"] = "О книге";
+}
+
+
+
+<div>
+    <h4>Книга: @Html.DisplayFor(model => model.Title)</h4>
+     
+    <hr />
+     
+</div>
+
+<div class="container">
+  <div class="row"> 
+
+      <div class="col-3">
+      <img src="@Url.Action("GetFile","Book",new{id=Model.BookId})" alt="Нет фото" width="260">
+      </div>
+    
+
+    <div class="col">
+    <dl class="row">
+            <dt class = "col-sm-2">
+                <label>Обложка:</label>
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Img)
+            </dd>
+            <hr />
+            <dt class = "col-sm-2">
+                <label>Название:</label>
+            </dt>
+           
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <hr />
+            <dt class = "col-sm-2">
+                <label>Авторы:</label>
+            </dt>
+           
+            <dd class = "col-sm-10">
+                       @{
+                           foreach (var author in Model.Authors)
+                           {
+                               @Html.DisplayFor(modelItem=>author.Surname)
+                               <b> </b>
+                                @Html.DisplayFor(modelItem => author.Firstname)
+                                <b> </b>
+                                @Html.DisplayFor(modelItem => author.Secondname)
+                                <br/>
+                           }
+                       }  
+            
+            </dd>
+            <hr />
+            <dt class = "col-sm-2">
+                <label>Жанры:</label>
+            </dt>
+          
+            <dd class = "col-sm-10">
+                 @{
+                           foreach (var genre in Model.Genres)
+                           {
+                                @Html.DisplayFor(modelItem=>genre.Name)<br/>
+                           }
+                       }  
+            </dd>
+            <hr />
+            <dt class = "col-sm-2">
+                <label>На складе,шт:</label>
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.CountBook)
+            </dd>
+            <hr />
+            <dt class = "col-sm-2">
+                <label>Цена:</label>
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <hr />
+     </dl>
+    </div>
+
+   
+   
+  </div>
+</div>
+
+
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">О книге</button>
+    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Отзывы</button>
+    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Читать онлайн</button>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">@Html.DisplayFor(model => model.Annotation)</div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Отзывы о книге отсутствуют</div>
+  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Временно недоступно</div>
+</div>
+<hr/>
+<div>
+    <a asp-action="EditBook" asp-route-id="@Model?.BookId">Редактировать книгу</a> |
+    <a asp-action="Index">К списку книг</a>
+</div>
