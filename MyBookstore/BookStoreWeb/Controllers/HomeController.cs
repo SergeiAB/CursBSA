@@ -1,4 +1,5 @@
 ﻿using BookStoreWeb.Models;
+using BookStoreWeb.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,17 +8,26 @@ namespace BookStoreWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IBookService _bookService;
+        private readonly IWebHostEnvironment _appEnvironment;
+        public HomeController(ILogger<HomeController> logger, IBookService bookService, IWebHostEnvironment appEnvironment)
         {
             _logger = logger;
+            _bookService = bookService;
+            _appEnvironment = appEnvironment;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var books = _bookService.GetAllBooks();
+            return View(books);
         }
 
+        public IActionResult ShowBook(int id)
+        {
+            var book = _bookService.GetBook(id);
+            return View(book);
+        }
         public IActionResult Privacy()
         {
             return View();

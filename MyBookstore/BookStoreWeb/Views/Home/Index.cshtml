@@ -1,8 +1,32 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@model IEnumerable<BookStoreWeb.DataContext.Book>
+@{
+    ViewData["Title"] = "Каталог";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+      <div class="row row-cols-auto">
+            @foreach(var item in Model)
+            {
+               <div class="col">
+                    <div class="card text-start text-white bg-secondary border-info mb-3" style="width: 12rem;">
+                      <img src="@Url.Action("GetFile","Book",new{id=item.BookId})" class="card-img-top" alt="нет фото">
+                            <div class="card-body">
+                                <p class="card-title fw-normal">@item.Title</p>
+    
+                                <p class="card-text fw-light">
+                               
+                                    @foreach (var author in item.Authors)
+                                    {  
+                                    @author.Surname<b> </b>@author.Firstname<br/>
+                                    }
+                                </p>
+                                        
+                            </div>                   
+                                     <a href="@Url.Action("ShowBook","Home",new{id=item.BookId})" class="btn btn-outline-info btn-sm">Просмотр книги</a>
+                    </div>
+              </div>
+   
+            }
+      </div>
 </div>

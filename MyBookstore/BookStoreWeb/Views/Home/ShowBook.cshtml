@@ -23,13 +23,13 @@
 
     <div class="col">
     <dl class="row">
-            <dt class = "col-sm-2">
+          @*  <dt class = "col-sm-2">
                 <label>Обложка:</label>
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.Img)
             </dd>
-            <hr />
+            <hr />*@
             <dt class = "col-sm-2">
                 <label>Название:</label>
             </dt>
@@ -81,7 +81,8 @@
                 <label>Цена:</label>
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Price)
+                @Html.DisplayFor(model => model.Price) <b>........</b>
+                 <a asp-action="Index" asp-route-id="@Model?.BookId">Добавить в корзину</a>
             </dd>
             <hr />
      </dl>
@@ -108,6 +109,7 @@
 </div>
 <hr/>
 <div>
-    <a asp-action="EditBook" asp-route-id="@Model?.BookId">Редактировать книгу</a> |
-    <a asp-action="Index">К списку книг</a>
+    <a asp-action="Index" asp-route-id="@Model?.BookId">Добавить в корзину</a> |
+    <a asp-action="Index">На главную</a>
 </div>
+
