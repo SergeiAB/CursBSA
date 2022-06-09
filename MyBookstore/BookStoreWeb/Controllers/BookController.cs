@@ -1,9 +1,11 @@
 ﻿using BookStoreWeb.DataContext;
 using BookStoreWeb.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreWeb.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class BookController : Controller
     {
         IBookService bookService;
@@ -142,7 +144,8 @@ namespace BookStoreWeb.Controllers
             }
 
         }
-
+        
+        [AllowAnonymous]
         public FileContentResult GetFile(int id)
         {
             

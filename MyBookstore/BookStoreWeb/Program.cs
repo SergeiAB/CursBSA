@@ -2,6 +2,7 @@
 
 using BookStoreWeb.DataContext;
 using BookStoreWeb.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,14 @@ string connectionString = "Server=(localdb)\\mssqllocaldb;Database=BookBasketDB;
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ContextBook>(options=>options.UseSqlServer(connectionString));
 builder.Services.AddTransient<IBookService,BookService>();
+builder.Services.AddTransient<AccountServiice>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>//CookieAuthenticationOptions
+                {
+                    options.LoginPath = new PathString("/Account/Login");
+                    options.AccessDeniedPath = new PathString("/Account/login");
+                }
+                );
 
 
 var app = builder.Build();
@@ -35,6 +44,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

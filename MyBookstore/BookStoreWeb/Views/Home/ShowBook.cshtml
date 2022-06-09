@@ -82,7 +82,7 @@
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.Price) <b>........</b>
-                 <a asp-action="Index" asp-route-id="@Model?.BookId">Добавить в корзину</a>
+                 <a asp-action="BuyBook" asp-route-id="@Model?.BookId">Добавить в корзину</a>
             </dd>
             <hr />
      </dl>
@@ -109,7 +109,7 @@
 </div>
 <hr/>
 <div>
-    <a asp-action="Index" asp-route-id="@Model?.BookId">Добавить в корзину</a> |
+    <a asp-action="BuyBook" asp-route-id="@Model?.BookId">Добавить в корзину</a> |
     <a asp-action="Index">На главную</a>
 </div>
 
