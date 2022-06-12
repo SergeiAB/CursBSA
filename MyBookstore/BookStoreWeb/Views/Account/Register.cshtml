@@ -30,7 +30,17 @@
             <label asp-for="ConfirmPassword">Повторите пароль:</label><br />
             <input asp-for="ConfirmPassword" />
             <span asp-validation-for="ConfirmPassword" />
-        </div>
+        </div><br/>
+
+        @if (User.IsInRole("admin"))
+        {
+             <div>
+            <label asp-for="RoleName">Введите роль:</label><br />
+            <input type="text" asp-for="RoleName" />
+            @*<span asp-validation-for="RoleName" />*@
+            </div><br/>
+        }
+       
         <div>
             <input type="submit" value="Регистрация" />
         </div>

@@ -20,14 +20,15 @@ namespace BookStoreWeb.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string? returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel model)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginModel model, string? returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -36,7 +37,16 @@ namespace BookStoreWeb.Controllers
                 {
                     await Authenticate(user); // аутентификация
 
-                    return RedirectToAction("Index", "Home");
+                    if (returnUrl != null)
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    
+                    
                 }
                 else
                 {
@@ -52,7 +62,7 @@ namespace BookStoreWeb.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
@@ -87,11 +97,23 @@ namespace BookStoreWeb.Controllers
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
+        [HttpGet]
+        public IActionResult CreateEmployee()
+        {
+            ViewBag.emploee =_accountServiice.CreatEmploee();
+            return View();
+        }
 
+        [HttpPost]
+        public IActionResult CreateEmployee(RegisterModel model)
+        {
+            //var emploe = _accountServiice.CreatEmploee();
+            return View();
+        }
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Home");
         }
     }
 

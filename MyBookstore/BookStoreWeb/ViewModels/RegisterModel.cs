@@ -4,6 +4,9 @@ namespace BookStoreWeb.ViewModels
 {
     public class RegisterModel
     {
+       
+        public string? RoleName { get; set; }
+
         [Required(ErrorMessage ="Не указано имя")]
         public string UserName { get; set; }
 

@@ -21,7 +21,8 @@ namespace BookStoreWeb.Service
 
         public async Task<User> AddUser(RegisterModel model)
         {
-            Role userRole = await db.Roles.FirstOrDefaultAsync(x => x.RoleName == "user");
+            if (model.RoleName == null) model.RoleName = "user";
+            Role userRole = await db.Roles.FirstOrDefaultAsync(x => x.RoleName == model.RoleName); ;
 
             User user =new User { Email = model.Email, Password = model.Password, 
                                   UserName = model.UserName, Phone = model.Phone };
@@ -32,6 +33,11 @@ namespace BookStoreWeb.Service
             await db.SaveChangesAsync();
             return user;
         }
-        
+
+        public IEnumerable<Role> CreatEmploee()
+        {
+            var emploee = db.Roles.Where(x => x.RoleName == "admin" || x.RoleName=="trader" ).Include(y=> y.Users).ToList();
+            return emploee;
+        }
     }
 }

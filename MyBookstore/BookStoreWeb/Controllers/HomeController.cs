@@ -9,23 +9,25 @@ namespace BookStoreWeb.Controllers
     
     public class HomeController : Controller
     {
-        //private readonly ILogger<HomeController> _logger;
+       
         private readonly IBookService _bookService;
-        //private readonly IWebHostEnvironment _appEnvironment;
-        public HomeController(ILogger<HomeController> logger, IBookService bookService, IWebHostEnvironment appEnvironment)
+       
+        public HomeController(IBookService bookService)
         {
-            //_logger = logger;
+           
             _bookService = bookService;
-            //_appEnvironment = appEnvironment;
+           
         }
         [AllowAnonymous]
         public IActionResult Index()
         {
             var books = _bookService.GetAllBooks();
+
+            
             return View(books);
         }
 
-        [Authorize(Roles = "user")]
+        [Authorize(Roles = "user, admin")]
         public IActionResult ShowBook(int id)
         {
             var book = _bookService.GetBook(id);
@@ -45,9 +47,10 @@ namespace BookStoreWeb.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        public IActionResult Temp()
+        public IActionResult ListBookForAdmin()
         {
-            return View();
+            var books = _bookService.GetAllBooks();
+            return View(books);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
